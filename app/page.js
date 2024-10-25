@@ -16,8 +16,8 @@ export default function Home() {
     setIsMounted(true);
   }, []);
 
-  // Function to convert wei to BNB
-  const toBNB = (wei) => (Number(wei) / 1e18).toFixed(18); // Convert wei to BNB
+  // Function to convert wei to BNB with 3 decimals
+  const toBNB = (wei) => (Number(wei) / 1e18).toFixed(3);
 
   // Contract read logic
   const { data: signUpFee, isLoading: loadingSignUpFee } = useContractRead({
@@ -101,7 +101,6 @@ export default function Home() {
 
   if (!isMounted) return null;
 
-console.log(contractABI);
 
 return (
   <div className="w-full min-h-screen bg-gray-100 flex flex-col items-center py-10">
@@ -179,7 +178,7 @@ return (
       <div className="bg-white p-6 rounded-lg shadow-lg">
         <h2 className="text-2xl font-bold mb-4 text-center text-gray-800">Your Upline</h2>
         <p className="text-gray-700 text-center">
-          {loadingUpline ? 'Loading...' : (upline || '0x0')}
+          {loadingUpline ? 'Loading...' : (upline ? `${upline.substring(0, 6)}...${upline.substring(upline.length - 4)}` : 'N/A')}
         </p>
       </div>
 
